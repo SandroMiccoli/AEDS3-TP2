@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "arquivos.h"
+#include "matriz.h"
+#include "lcs.h"
 
 #define MAXCHAR 5000
 
@@ -24,6 +26,9 @@ int main(int argc, char *argv[]){
         char saida[40] = "saida/";
         int k; // Instâncias de matrizes
         char palavra[MAXCHAR] = "";
+        int tamPalavra;
+
+        Matriz estados; // Matriz n x 2, onde n é o tamanho da string e possui dois estados, o atual e o anterior.
 
         strcat(entrada,argv[1]);
         strcat(saida,argv[2]);
@@ -36,7 +41,17 @@ int main(int argc, char *argv[]){
         for (int l=0; l<k; l++){
 
             fgets(palavra,MAXCHAR,inp);
-            printf("%s",palavra);
+            tamPalavra = strlen(palavra);
+
+            criaMatriz(2,tamPalavra,&estados);
+
+            preencheMatriz(0,&estados); // Preenche matriz toda com 0
+
+            lcs(palavra, tamPalavra-1, &estados);
+
+            //imprimeMatriz(estados);
+
+            destroiMatriz(&estados);
 
         }
 
