@@ -25,9 +25,8 @@ void destroiMatriz(Matriz *matriz);
 
 
 // Leitura e Escrita
-void leMatriz(FILE * arquivo, Matriz * M1);
 
-void preencheMatriz(FILE * arquivo, Matriz * m);
+void preencheMatriz(int num, Matriz *m);
 
 void imprimeMatriz(Matriz m);
 

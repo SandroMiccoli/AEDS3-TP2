@@ -46,28 +46,12 @@ void destroiMatriz(Matriz *matriz){
     Leitura
 */
 
-// Lê a matriz do arquivo
-void leMatriz(FILE * arquivo, Matriz * M1){
-
-    int n;
-
-    fscanf(arquivo, "%d", &n);
-
-//    printf("N: %d\n",n);
-
-    criaMatriz(n, n, M1);
-    preencheMatriz(arquivo, M1);
-
-
-}
-
-// Preenche a matriz m com os valores da matriz do arquivo.
-void preencheMatriz(FILE * arquivo, Matriz *m){
-    int num;
+// Preenche a matriz m com o valor da variável num
+void preencheMatriz(int num, Matriz *m){
+    //int num;
 
     for (int x=0; x < m->col; x++){
             for (int y=0; y < m->lin; y++){
-                fscanf(arquivo,"%d ",&num);
                 m->matriz[x][y] = num;
             }
         }
