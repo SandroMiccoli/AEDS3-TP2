@@ -25,7 +25,8 @@ int main(int argc, char *argv[]){
         char entrada[40] = "entrada/";
         char saida[40] = "saida/";
         int k; // Instâncias de matrizes
-        char palavra[MAXCHAR] = "";
+        char *palavra;
+        palavra = (char *) malloc (MAXCHAR * sizeof(char));
         int tamPalavra;
 
         Matriz estados; // Matriz n x 2, onde n é o tamanho da string e possui dois estados, o atual e o anterior.
@@ -40,14 +41,14 @@ int main(int argc, char *argv[]){
 
         for (int l=0; l<k; l++){
 
-            fgets(palavra,MAXCHAR,inp);
+            fscanf(inp,"%s\n",palavra);
             tamPalavra = strlen(palavra);
 
-            criaMatriz(2,tamPalavra,&estados);
+            criaMatriz(2,tamPalavra+1,&estados);
 
             preencheMatriz(0,&estados); // Preenche matriz toda com 0
 
-            lcs(palavra, tamPalavra-1, &estados);
+            fprintf(out,"%d\n",lcs(palavra, tamPalavra, &estados));
 
             //imprimeMatriz(estados);
 
@@ -55,6 +56,7 @@ int main(int argc, char *argv[]){
 
         }
 
+        free(palavra);
         fechaArquivo(inp);
         fechaArquivo(out);
 

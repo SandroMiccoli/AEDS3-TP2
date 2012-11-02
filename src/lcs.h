@@ -8,4 +8,9 @@
 
 */
 
+#ifndef LCS_H_
+#define LCS_H_
+
 int lcs(char * palavra, int len, Matriz * estados);
+
+#endif /* LCS_H_ */
