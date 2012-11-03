@@ -4,6 +4,9 @@ CFLAGS = -Wall -Lsrc
 
 RM = rm -f
 
+MAIN1 = tp2pd
+MAIN2 = tp2g
+
 OBJS1 = src/tp2pd.c src/arquivos.c src/matriz.c src/lcs.c
 OBJS2 = src/tp2g.c src/arquivos.c src/matriz.c src/lcs.c
 
@@ -11,9 +14,6 @@ VALGRIND = valgrind -v --read-var-info=yes --tool=memcheck --leak-check=yes --sh
 #VALGRIND = valgrind  --read-var-info=yes --tool=memcheck --leak-check=yes -v
 #VALGRIND = valgrind  --track-origins=yes --tool=memcheck --leak-check=yes -v
 #VALGRIND = valgrind  --tool=memcheck
-
-MAIN1 = tp2pd
-MAIN2 = tp2g
 
 main: $(OBJS1) $(OBJS2)
 	@echo ""
@@ -36,19 +36,14 @@ main: $(OBJS1) $(OBJS2)
 	@echo "------------------------"
 	@echo ""
 
-%.o: %.c %.h
-	@echo "------------------------"
-	@echo " Compilando objeto \"$@\""
-	@echo "------------------------"
-	@$(CC) $(CFLAGS) $< -c
-
 clean:
 	$(RM) $(MAIN1) $(MAIN2) *.o *~ testes/*~
 	$(RM) entrada/ent* saida/sai* tempo/*
 	clear
 
-val: $(MAIN)
-	$(VALGRIND) ./$(MAIN) input.txt output.txt
+val: main
+	$(VALGRIND) ./$(MAIN1) input.txt output.txt
+	$(VALGRIND) ./$(MAIN2) input.txt output.txt
 
 run: main
 	@echo "..Executando programa..."
