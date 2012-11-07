@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "arquivos.h"
 #include "matriz.h"
 
 int max(int a, int b){
