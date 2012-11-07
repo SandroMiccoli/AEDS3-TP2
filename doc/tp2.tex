@@ -82,9 +82,9 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 
     O que um problema de otimização deve ter para que a programação dinâmica seja aplicável são duas principais características: subestrutura ótima e superposição de subproblemas. Um problema apresenta uma subestrutura ótima quando uma solução ótima para o problema contém em seu interior soluções ótimas para subproblemas. A superposição de subproblemas acontece quando um algoritmo recursivo reexamina o mesmo problema muitas vezes \cite{szwarccfiter}.
 
-    O \textit{LCS} tem subestrutura ótima, pois pode ser quebrado em problemas menores, mais simples, os quais também podem ser divididos em subproblemas menores ainda, e assim por diante, até, finalmente, a solução for trivial. O \textit{LCS} também tem sobreposição de problemas: a solução de um subproblema maior depende da solução de vários subproblemas menores \cite{wikilcs}.
+    O \textit{LCS} tem \textbf{subestrutura ótima}, pois pode ser quebrado em problemas menores, mais simples, os quais também podem ser divididos em subproblemas menores ainda, e assim por diante, até, finalmente, a solução for trivial. O \textit{LCS} também tem \textbf{sobreposição de problemas}: a solução de um subproblema maior depende da solução de vários subproblemas menores \cite{wikilcs}.
 
-    Para calcular o \textit{LCS} utilizamos uma tabela para armazenar os valores calculados a cada passo da execução. As implementações mais encontradas na internet utilizavam uma tabela $(n+1, m+1)$, sendo $n$ e $m$ o tamanho de cada uma das strings. A abordagem dinâmica escolhida aqui foi utilizar uma tabela de tamanho $(n, 2)$, sendo $n$ o tamanho da \textit{string} que encontraremos o menor palíndromo, pois como o trabalho pede apenas o tamanho do \textit{LCS}, então só preciamos do estado atual e anterior de cada coluna da matriz, por isso preciamos de apenas duas linhas para realizar os cálculos \cite{hirsch}.
+    Para calcular o \textit{LCS} utilizamos uma tabela para armazenar os valores calculados a cada passo da execução. As implementações mais encontradas na internet utilizavam uma tabela $(n+1, m+1)$, sendo $n$ e $m$ o tamanho de cada uma das strings. A abordagem dinâmica escolhida aqui foi utilizar uma tabela com apenas $2$ linhas e $n$ colunas, sendo $n$ o tamanho da \textit{string} que encontraremos o menor palíndromo, pois como o trabalho pede apenas o tamanho do \textit{LCS}, então só precisamos do estado atual e anterior de cada coluna da matriz, por isso utilizamos apenas duas linhas para realizar os cálculos \cite{hirsch}.
 
     A seguir um pseudocódigo do algoritmo implementado:
 
@@ -124,13 +124,53 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 \subsection{Abordagem Gulosa}
 \label{gulosa}
 
+A abordagem gulosa escolhida foi a seguinte: o algoritmo percorre a palavra letra por letra e a cada momento verifica se essa palavra é um palíndromo ou não. Ele percorre a palavra inteira para encontrar o maior palíndromo contido nela, então de acordo com seu tamanho e o tamanho do maior palíndromo, podemos deduzir que a quantidade de letras a serem inseridas para transformar a palavra inicial em um palíndromo.
 
-\subsubsection{Algoritmo implementado}
+O algoritmo tem \textbf{subestrutura ótima} porém não pode ser considerado ótimo. A cada iteração ele verifica se a atual substring é um palíndromo ou não, caso seja, ela verifica se ela é maior que o palíndromo encontrado anteriormente, se for então é armazenado a quantidade de caracteres desse novo palíndromo encontrado.
+
+O algoritmo supõe que o maior palíndromo estará no início ou no final da palavra, em outras palavras, o algortimo apenas encontra palíndromos que são sufixos ou prefixos da palavra. Então para casos em que o maior palíndromo esteja no meio da palavra o algoritmo guloso não será nem um pouco ótimo.
+
+Logo abaixo segue um exemplo para o algoritmo ficar mais claro:
+
+    \begin{lstlisting}[language=c]
+        Palavra: ovobanana
+        a 1 // Marca como sendo o maior palindromo
+        o 1
+        na 0
+        vo 0
+        ana 1 // Palindromo maior do que o encontrado anteriormente
+        ovo 1
+        nana 0
+        bovo 0
+        anana 1 // Palindromo maior do que o encontrado anteriormente
+        abovo 0
+        banana 0
+        nabovo 0
+        obanana 0
+        anabovo 0
+        vobanana 0
+        nanabovo 0
+        ovobanana 0
+        ananabovo 0
+    \end{lstlisting}
+
+    Então o algoritmo encontrou o maior palíndromo (anana), que contém 5 caracteres. A resposta que ele retorna é a quantidade de letras da palavra original, menos a quantidade de letras do palíndromo. Nesse caso, o algoritmo irá precisar inserir quatro caracteres para transformar a palavra toda em um palíndromo.
+
+\subsubsection{Algoritmos implementados}
 
 \begin{itemize}
- \item \begin{large}\textit{int lcs(char * palavra, int len, Matriz * estados)}\end{large}\\
- \subitem \textbf{Descrição:} Calcula o \textit{LCS} da palavra e retorna seu valor.
- \subitem \textbf{Parâmetros:} Vetor da palavra, inteiro contendo o tamanho da palavra, e uma matriz de estados.
+ \item \begin{large}\textit{int palindromo(char *palavra, int len)}\end{large}\\
+ \subitem \textbf{Descrição:} Verifica caso a palavra em questão é um palíndromo ou não
+ \subitem \textbf{Parâmetros:} Vetor da palavra e um inteiro contendo o tamanho da palavra.
+ \subitem \textbf{Complexidade:} $O(n)$, onde $n$ é o tamanho da palavra.
+\end{itemize}
+
+\vspace{0.2 true cm}
+
+\begin{itemize}
+ \item \begin{large}\textit{int guloso(char * palavra, int len)}\end{large}\\
+ \subitem \textbf{Descrição:} Algoritmo que vasculha a palavra para encontrar o maior palíndromo que seja sufixo ou prefixo da palavra.
+ \subitem \textbf{Parâmetros:} Vetor da palavra e um inteiro contendo o tamanho da palavra.
  \subitem \textbf{Complexidade:} $O(n^2)$, onde $n$ é o tamanho da palavra.
 \end{itemize}
 
@@ -148,6 +188,7 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 \item \textbf{tp2pd.c} Arquivo principal do programa com a abordagem de programação dinâmica, chama a função LCS e insere cada resultado no arquivo de saída.
 \item \textbf{tp2g.c} Arquivo principal do programa com a abordagem gulosa, chama a função ? e insere cada resultado no arquivo de saída.
 \item \textbf{lcs.c} Contém a implementação da função LCS, utilizada na abordagem de programação dinâmica.
+\item \textbf{guloso.c} Contém a definição da função guloso, utilizada na abordagem de paradigma guloso, e da função palindromo.
 \item \textbf{matriz.c} Contém todas as funções de manipulação, leitura e escrita de matrizes.
 \item \textbf{arquivos.c} Um tipo abstrado de dados de manipulação de arquivos, contendo funções de abertura, leitura, escrita e fechamento.
 \end{itemize}
@@ -156,6 +197,7 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 
 \begin{itemize}
 \item \textbf{lcs.h} Contém a definição da função LCS, utilizada na abordagem de programação dinâmica.
+\item \textbf{guloso.h} Contém a definição da função guloso, utilizada na abordagem de paradigma guloso, e da função palindromo.
 \item \textbf{matriz.h} Além de definir a estrutura de matriz, contém o cabeçalho todas as funções de manipulação, leitura e escrita de matrizes.
 \item \textbf{arquivos.h} Definição da das funções utilizadas para ler, escrever e fechar corretamente um arquivo.
 \end{itemize}
@@ -173,7 +215,7 @@ gcc -Wall -Lsrc src/tp2pd.c src/arquivos.c src/matriz.c src/lcs.c -o tp2pd \end{
 E para o algortimo guloso:
 \begin{footnotesize}
 \begin{verbatim}
-gcc -Wall -Lsrc src/tp2g.c src/arquivos.c src/matriz.c -o tp2g \end{verbatim}
+gcc -Wall -Lsrc src/tp2g.c src/arquivos.c src/matriz.c src/guloso.c -o tp2g \end{verbatim}
 \end{footnotesize}
 
 Ou através do comando $make$.
