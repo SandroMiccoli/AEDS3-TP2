@@ -8,7 +8,7 @@ MAIN1 = tp2pd
 MAIN2 = tp2g
 
 OBJS1 = src/tp2pd.c src/arquivos.c src/matriz.c src/lcs.c
-OBJS2 = src/tp2g.c src/arquivos.c src/matriz.c src/lcs.c
+OBJS2 = src/tp2g.c src/arquivos.c src/guloso.c
 
 VALGRIND = valgrind -v --read-var-info=yes --tool=memcheck --leak-check=yes --show-reachable=yes --track-origins=yes
 #VALGRIND = valgrind  --read-var-info=yes --tool=memcheck --leak-check=yes -v

@@ -12,8 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "arquivos.h"
-#include "matriz.h"
-#include "lcs.h"
+#include "guloso.h"
 
 #define MAXCHAR 5000
 
@@ -24,12 +23,10 @@ int main(int argc, char *argv[]){
 
         char entrada[40] = "entrada/";
         char saida[40] = "saida/";
-        int k; // Instâncias de matrizes
+        int k; // Instâncias de palavras
         char *palavra;
         palavra = (char *) malloc (MAXCHAR * sizeof(char));
         int tamPalavra;
-
-        Matriz estados; // Matriz n x 2, onde n é o tamanho da string e possui dois estados, o atual e o anterior.
 
         strcat(entrada,argv[1]);
         strcat(saida,argv[2]);
@@ -44,15 +41,10 @@ int main(int argc, char *argv[]){
             fscanf(inp,"%s\n",palavra);
             tamPalavra = strlen(palavra);
 
-            criaMatriz(2,tamPalavra+1,&estados);
+            printf("%d\n",guloso(palavra, tamPalavra));
 
-            preencheMatriz(0,&estados); // Preenche matriz toda com 0
+            fprintf(out,"%d\n",guloso(palavra, tamPalavra));
 
-            fprintf(out,"%d\n",lcs(palavra, tamPalavra, &estados));
-
-            //imprimeMatriz(estados);
-
-            destroiMatriz(&estados);
 
         }
 
@@ -62,7 +54,7 @@ int main(int argc, char *argv[]){
 
     }
     else{
-        printf("Número incorreto de parâmetros. Fazer seguir exemplo:\n\n\t./tp1 input.txt output.txt\n\n"); exit(0);
+        printf("Número incorreto de parâmetros. Fazer seguir exemplo:\n\n\t./tp2 input.txt output.txt\n\n"); exit(0);
     }
     return 0;
 }

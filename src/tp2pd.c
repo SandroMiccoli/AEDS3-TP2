@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 
         char entrada[40] = "entrada/";
         char saida[40] = "saida/";
-        int k; // Instâncias de matrizes
+        int k; // Instâncias de palavras
         char *palavra;
         palavra = (char *) malloc (MAXCHAR * sizeof(char));
         int tamPalavra;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
 
     }
     else{
-        printf("Número incorreto de parâmetros. Fazer seguir exemplo:\n\n\t./tp1 input.txt output.txt\n\n"); exit(0);
+        printf("Número incorreto de parâmetros. Fazer seguir exemplo:\n\n\t./tp2 input.txt output.txt\n\n"); exit(0);
     }
     return 0;
 }
