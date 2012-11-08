@@ -3,7 +3,7 @@
 %	@Sandro Miccoli
 %
 %	* Você pode identificar erros de grafia através do seguinte comando linux:
-%		aspell --encoding="utf-8" -c -t=tex --lang="pt_BR" tp1.tex
+%		aspell --encoding="utf-8" -c -t=tex --lang="pt_BR" tp2.tex
 %
 
 \documentclass[12pt]{article}
@@ -44,7 +44,7 @@
 \maketitle
 
 \begin{resumo}
-Este relatório descreve como foi solucionado o problema de encontrar o menor palíndromo possível dada uma palavra. Será descrito como foi modelado o problema, pois duas soluções foram propostas, uma abordagem de paragima guloso e outra de programação dinâmica. Finalmente será detalhado a análise de complexidade dos algoritmos e uma análise comparativa entre os dois paradigmas e uma breve conclusão do trabalho implementado.
+Este relatório descreve como foi solucionado o problema de encontrar o menor palíndromo possível dada uma palavra. Será descrito como foi modelado o problema, pois duas soluções foram propostas, uma abordagem de paradigma guloso e outra de programação dinâmica. Finalmente será detalhado a análise de complexidade dos algoritmos e uma análise comparativa entre os dois paradigmas e uma breve conclusão do trabalho implementado.
 \end{resumo}
 
 \section{INTRODUÇÃO}
@@ -63,9 +63,11 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 
 	Para solucionar o problema do palíndromo, o modelamos como o problema da \textbf{Maior Subsequência Comum}, também conhecido como \textit{Longest Common Subsequence} (LCS). Uma subsequência de uma sequência de símbolos $X$ é uma sequência $Y$ com zero com maios símbolos de $X$ removidos. Exemplo: $Z = \{B, C, D, B\}$ é uma subsequência de $X = \{A, B, C, B, D, A, B\}$.
 	\\
+	\\
 	Definição mais formal:\\
 	\\
 	\textit{Longest Common Subsequence (LCS)}: Datas as sequências $X [1..m]$ e $Y [1..n]$ encontrar uma sequência $Z$ que seja subsequência de $X$ e $Y$ e tem comprimento (número de símbolos) máximo.\\
+	\\
 	$X = \{A, B, C, B, D, A, B\}$\\
 	$Y = \{B, D, C, A, B, A\}$\\
 	$LCS (X,Y) = \{B, C, B, A\}$\\
@@ -126,9 +128,9 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 
 A abordagem gulosa escolhida foi a seguinte: o algoritmo percorre a palavra letra por letra e a cada momento verifica se essa palavra é um palíndromo ou não. Ele percorre a palavra inteira para encontrar o maior palíndromo contido nela, então de acordo com seu tamanho e o tamanho do maior palíndromo, podemos deduzir que a quantidade de letras a serem inseridas para transformar a palavra inicial em um palíndromo.
 
-O algoritmo tem \textbf{subestrutura ótima} porém não pode ser considerado ótimo. A cada iteração ele verifica se a atual substring é um palíndromo ou não, caso seja, ela verifica se ela é maior que o palíndromo encontrado anteriormente, se for então é armazenado a quantidade de caracteres desse novo palíndromo encontrado.
+A cada iteração ele verifica se a atual substring é um palíndromo ou não, caso seja, ela verifica se ela é maior que o palíndromo encontrado anteriormente, se for então é armazenado a quantidade de caracteres desse novo palíndromo encontrado.
 
-O algoritmo supõe que o maior palíndromo estará no início ou no final da palavra, em outras palavras, o algortimo apenas encontra palíndromos que são sufixos ou prefixos da palavra. Então para casos em que o maior palíndromo esteja no meio da palavra o algoritmo guloso não será nem um pouco ótimo.
+O algoritmo não pode ser considerado ótimo, pois ele supõe que o maior palíndromo estará no início ou no final da palavra, em outras palavras, o algoritmo apenas encontra palíndromos que são sufixos ou prefixos da palavra. Então para casos em que o maior palíndromo esteja no meio da palavra o algoritmo guloso não será nem um pouco ótimo.
 
 Logo abaixo segue um exemplo para o algoritmo ficar mais claro:
 
@@ -186,18 +188,18 @@ Logo abaixo segue um exemplo para o algoritmo ficar mais claro:
 
 \begin{itemize}
 \item \textbf{tp2pd.c} Arquivo principal do programa com a abordagem de programação dinâmica, chama a função LCS e insere cada resultado no arquivo de saída.
-\item \textbf{tp2g.c} Arquivo principal do programa com a abordagem gulosa, chama a função ? e insere cada resultado no arquivo de saída.
+\item \textbf{tp2g.c} Arquivo principal do programa com a abordagem gulosa, chama a função "guloso" e insere cada resultado no arquivo de saída.
 \item \textbf{lcs.c} Contém a implementação da função LCS, utilizada na abordagem de programação dinâmica.
 \item \textbf{guloso.c} Contém a definição da função guloso, utilizada na abordagem de paradigma guloso, e da função palindromo.
 \item \textbf{matriz.c} Contém todas as funções de manipulação, leitura e escrita de matrizes.
-\item \textbf{arquivos.c} Um tipo abstrado de dados de manipulação de arquivos, contendo funções de abertura, leitura, escrita e fechamento.
+\item \textbf{arquivos.c} Um tipo abstrato de dados de manipulação de arquivos, contendo funções de abertura, leitura, escrita e fechamento.
 \end{itemize}
 
 \subsubsection{Arquivos .h}
 
 \begin{itemize}
 \item \textbf{lcs.h} Contém a definição da função LCS, utilizada na abordagem de programação dinâmica.
-\item \textbf{guloso.h} Contém a definição da função guloso, utilizada na abordagem de paradigma guloso, e da função palindromo.
+\item \textbf{guloso.h} Contém a definição da função guloso, utilizada na abordagem de paradigma guloso, e da função palíndromo.
 \item \textbf{matriz.h} Além de definir a estrutura de matriz, contém o cabeçalho todas as funções de manipulação, leitura e escrita de matrizes.
 \item \textbf{arquivos.h} Definição da das funções utilizadas para ler, escrever e fechar corretamente um arquivo.
 \end{itemize}
@@ -206,13 +208,13 @@ Logo abaixo segue um exemplo para o algoritmo ficar mais claro:
 
 O programa deve ser compilado através do compilador GCC através dos seguintes comandos
 
-Pkara programação dinâmica:
+Para programação dinâmica:
 \begin{footnotesize}
 \begin{verbatim}
 gcc -Wall -Lsrc src/tp2pd.c src/arquivos.c src/matriz.c src/lcs.c -o tp2pd \end{verbatim}
 \end{footnotesize}
 
-E para o algortimo guloso:
+E para o algoritmo guloso:
 \begin{footnotesize}
 \begin{verbatim}
 gcc -Wall -Lsrc src/tp2g.c src/arquivos.c src/matriz.c src/guloso.c -o tp2g \end{verbatim}
@@ -271,7 +273,9 @@ O arquivo de saída consiste em k linhas com o número mínimo de caracteres nec
 \section{AVALIAÇÃO EXPERIMENTAL}
 \label{avaliacao_experimental}
 
-Para testar o algoritmo realizamos quatro testes, separados em dois grupos. O primeiro grupo de testes se refere à grafos esparsos e o segundo a grafos densos.
+Para testar os algoritmos foi feito o seguinte: um script foi criado que, utilizando um dicionário de aproximadamente 2000 palavras, geraria uma sequência de palavras, concatenadas ou não, para testar cada tipo de cenário.
+
+Foi realizado uma série de testes, com entradas crescentes, da maneira que é explicado nas próximas seções.
 
 \subsection{Máquina utilizada}
 \label{maquina}
@@ -285,14 +289,120 @@ MemTotal:       3980124 kB
 \end{verbatim}
 
 
+\subsection{Testes}
+\label{testes}
+
+Então foi pensado em cinco testes a serem executados, um com apenas uma palavra pra ser testada, outro com 5 palavras concatenadas, um com 10 palavras concatenadas, um com 50 palavras concatenadas e, por último, um teste com 100 palavras concatenadas. Assim teríamos testes com palavras relativamente pequenas e com uma série de caracteres relativamente grandes. Assim poderíamos ver o comportamento de cada paradigma para tanto entradas pequenas quando grandes.
+
+O gráfico que será mostrado em cada teste mostra especificamente a quantidade de caracteres (em porcentagem) a mais que o algoritmo guloso teve de inserir que o algoritmo de programação dinâmica. Assim podemos fazer uma análise entre a solução não-ótima e a solução ótima.
+
+Dentro de cada subseção será dado um exemplo de entrada para cada teste e será detalhado melhor as características de cada um.
+
+\subsubsection{Testes pequenos - Uma palavra}
+\label{pequeno}
+
+A quantidade média de caracteres neste teste ficou entre aproximadamente $10$. A seguir um exemplo das palavras utilizadas no teste:
+
+\begin{verbatim}
+abbreviations
+abandoned
+youthfulness
+...
+\end{verbatim}
+
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{umapalavra.png}
+        \caption{Quantidade de caracteres a mais (em \%)}
+        \label{umapalavra}
+    \end{figure}
+
+    Na Figura \ref{umapalavra} é perceptível que a grande maioria dos testes não houve diferença entre a solução gulosa e a solução ótima. Porém, quando houve, a diferença de caracteres cresceu bastante, chegando até a $200\%$.
+
+    Para não alterar demais a visualização do gráfico, um resultado foi removido pois a diferença de caracteres era de $800\%$; mas, de uma série de 200 palavras testadas, apenas uma que teve esse comportamento. Isso ocorreu quando o algoritmo de programação dinâmica teve de inserir apenas uma letra e o guloso inseriu 9.
+
+
+\subsubsection{Testes médios - Cinco palavras concatenadas}
+\label{medio}
+
+Na Figura \ref{cincopalavras} pode-se ver o resultado do teste que utilizou uma série de palavras concatenadas, neste caso, cinco palavras. Cada instância ficou com aproximadamente $30$ até $40$ caracteres. A seguir um exemplo das palavras usadas no teste:
+
+\begin{verbatim}
+abatedabnormallywondrousxeroxingzero
+deifiedwonabolishmentsabbottzenith
+yankeewizardwoefulabaseswrangle
+...
+\end{verbatim}
+
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cincopalavras2.png}
+        \caption{Quantidade de caracteres a mais (em \%)}
+        \label{cincopalavras}
+    \end{figure}
+
+\subsubsection{Testes médios - Dez palavras concatenadas}
+\label{medio10}
+
+Na Figura \ref{dezpalavras} consta o resultado do teste que utilizou uma série de caracteres que eram formados por palavras concatenadas umas nas outras, neste caso, 10 palavras no total. Cada instância ficou com aproximadamente $60$ até $80$ caracteres. A seguir um exemplo das palavras usadas no teste:
+
+\begin{verbatim}
+woveyugoslavianyoungsterreferyuridevovedwonderabashingaboveyellowed
+wontwritesabaseszuluwrestyeayesterdayabbreviatingzoologicallyzone
+yorktownwrittenaberrationsaibohphobiaababawrappedwolffaberrantablewrote
+...
+\end{verbatim}
+
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{dezpalavras3.png}
+        \caption{Quantidade de caracteres a mais (em \%)}
+        \label{dezpalavras}
+    \end{figure}
+
+
+\subsubsection{Testes grandes - Cinquenta palavras concatenadas}
+\label{grande50}
+
+Na Figura \ref{cinquentapalavras} aumentamos a quantidade de palavras concatenadas para cinquenta. Neste teste não iremos mostrar as palavras concatenadas, mas cada uma ficou com $350$ até $450$ caracteres.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cinquentapalavras.png}
+        \caption{Quantidade de caracteres a mais (em \%)}
+        \label{cinquentapalavras}
+    \end{figure}
+
+\subsubsection{Testes grandes - Cem palavras concatenadas}
+\label{grande100}
+
+Na Figura \ref{cempalavras}, no último teste, concatenamos cem palavras. Não iremos mostrar as palavras concatenadas, mas cada uma ficou com uma média de $900$ caracteres.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cempalavras.png}
+        \caption{Quantidade de caracteres a mais (em \%)}
+        \label{cempalavras}
+    \end{figure}
+
 \subsection{Resultado}
 
-	O resultado geral dos testes ocorreu como esperado.
+	Como é possível perceber pela série de testes na última seção, quanto maior a cadeia de caracteres a ser computada pelos algoritmos, mais homogênea e regular a diferença entre cada solução fica. Nos primeiros teste, de apenas uma palavra \ref{pequeno}, e de 5 palavras \ref{medio}, a variação é gritante. No primeiro varia de $0\%$ até $800\%$, no segundo a variação diminui mas ainda é relativamente grande. Podemos ver na Figura \ref{cincopalavras}, que a quantidade de caracteres vai de aproximadamente $15\%$ para $100\%$.
+
+	Nos últimos testes a curva de variação de caracteres vai se tornando cada vez mais estável. No teste com dez palavras concatenadas, na Figura \ref{dezpalavras}, a variação vai de aproximadamente $25\%$ para $75\%$. Mas quando os caracteres vão para a casa das centenas e milhares, essa variação se torna cada vez menor, se localizando em torno dos $60\%$, $70\%$.
+
 
 \section{CONCLUSÃO}
 \label{conclusao}
 
-    Conclusão
+    Os dois algoritmos implementados solucionam o problema do palíndromo apresentado. O primeiro algoritmo, utilizando o paradigma de programação dinâmica, possui solução ótima, ou seja, sempre encontrará o melhor resultado. Já o algoritmo guloso, possui solução não-ótima, pois toma as decisões que julga ser melhor naquele momento específico, porém sem considerar vários outros aspectos do problema.
+
+    Foi visto na Avaliação Experimental, que quanto maior a cadeia de caracteres, mais constante ficava a diferença entre as soluções ótima e não-ótima. Claro que a solução ótima ainda conseguia resolver o problema com uma média de $60\%$ a menos de caracteres inseridos, mas ainda assim era um resultado que não era esperado. Acreditava que a solução não-ótima do algoritmo guloso teria um rendimento muito pior.
+
+    Caso fosse acatar o resultado do teste \ref{pequeno}, poderia dizer que o teto observável para a quantidade de caracteres a ser inseridos seria $800\%$, porém esse foi um único caso dentre centenas de outros testados. Observando os resultados dos testes maiores, poderia dizer que o teto observável ficaria em torno de $75\%$.
 
 \bibliographystyle{sbc}
 \bibliography{tp2}
