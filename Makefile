@@ -38,7 +38,7 @@ main: $(OBJS1) $(OBJS2)
 
 clean:
 	$(RM) $(MAIN1) $(MAIN2) *.o *~ testes/*~
-	$(RM) entrada/ent* saida/sai* tempo/*
+	$(RM) entrada/pd/* entrada/g/* saida/pd/* saida/g/* comp/*
 	clear
 
 val: main
