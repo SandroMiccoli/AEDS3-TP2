@@ -61,12 +61,13 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 \section{MODELAGEM}
 \label{modelagem}
 
-	Para solucionar o problema do palíndromo, o modelamos como o problema da \textbf{Maior Subsequência Comum}, também conhecido como \textit{Longest Common Subsequence} (LCS). Uma subsequência de uma sequência de símbolos $X$ é uma sequência $Y$ com zero com maios símbolos de $X$ removidos. Exemplo: $Z = \{B, C, D, B\}$ é uma subsequência de $X = \{A, B, C, B, D, A, B\}$.
+	Para solucionar o problema do palíndromo, o modelamos como o problema da \textbf{Maior Subsequência Comum}, também conhecido como \textit{Longest Common Subsequence} (LCS). Uma subsequência de uma sequência de símbolos $X$ é uma sequência $Y$ com zero ou mais símbolos de $X$ removidos. Exemplo: $Z = \{B, C, D, B\}$ é uma subsequência de $X = \{A, B, C, B, D, A, B\}$.
+	\\
 	\\
 	\\
 	Definição mais formal:\\
 	\\
-	\textit{Longest Common Subsequence (LCS)}: Datas as sequências $X [1..m]$ e $Y [1..n]$ encontrar uma sequência $Z$ que seja subsequência de $X$ e $Y$ e tem comprimento (número de símbolos) máximo.\\
+	\textit{Longest Common Subsequence (LCS)}: Dadas as sequências $X [1..m]$ e $Y [1..n]$ encontrar uma sequência $Z$ que seja subsequência de $X$ e $Y$ e tem comprimento (número de símbolos) máximo. Exemplo:\\
 	\\
 	$X = \{A, B, C, B, D, A, B\}$\\
 	$Y = \{B, D, C, A, B, A\}$\\
@@ -86,7 +87,7 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 
     O \textit{LCS} tem \textbf{subestrutura ótima}, pois pode ser quebrado em problemas menores, mais simples, os quais também podem ser divididos em subproblemas menores ainda, e assim por diante, até, finalmente, a solução for trivial. O \textit{LCS} também tem \textbf{sobreposição de problemas}: a solução de um subproblema maior depende da solução de vários subproblemas menores \cite{wikilcs}.
 
-    Para calcular o \textit{LCS} utilizamos uma tabela para armazenar os valores calculados a cada passo da execução. As implementações mais encontradas na internet utilizavam uma tabela $(n+1, m+1)$, sendo $n$ e $m$ o tamanho de cada uma das strings. A abordagem dinâmica escolhida aqui foi utilizar uma tabela com apenas $2$ linhas e $n$ colunas, sendo $n$ o tamanho da \textit{string} que encontraremos o menor palíndromo, pois como o trabalho pede apenas o tamanho do \textit{LCS}, então só precisamos do estado atual e anterior de cada coluna da matriz, por isso utilizamos apenas duas linhas para realizar os cálculos \cite{hirsch}.
+    Para calcular o \textit{LCS} utilizamos uma tabela para armazenar os valores calculados a cada passo da execução. As implementações mais encontradas na internet utilizavam uma tabela $(n+1, m+1)$, sendo $n$ e $m$ o tamanho de cada uma das strings. A abordagem dinâmica escolhida aqui foi utilizar uma tabela com apenas $2$ linhas e $n$ colunas, sendo $n$ o tamanho da \textit{string} que encontraremos o menor palíndromo. Como o trabalho pede apenas o tamanho do \textit{LCS}, então só precisamos do estado atual e anterior de cada coluna da matriz, por isso utilizamos apenas duas linhas para realizar os cálculos \cite{hirsch}.
 
     A seguir um pseudocódigo do algoritmo implementado:
 
@@ -126,7 +127,7 @@ Este relatório descreve como foi solucionado o problema de encontrar o menor pa
 \subsection{Abordagem Gulosa}
 \label{gulosa}
 
-A abordagem gulosa escolhida foi a seguinte: o algoritmo percorre a palavra letra por letra e a cada momento verifica se essa palavra é um palíndromo ou não. Ele percorre a palavra inteira para encontrar o maior palíndromo contido nela, então de acordo com seu tamanho e o tamanho do maior palíndromo, podemos deduzir que a quantidade de letras a serem inseridas para transformar a palavra inicial em um palíndromo.
+A abordagem gulosa escolhida foi a seguinte: o algoritmo percorre a palavra letra por letra e a cada momento verifica se essa palavra é um palíndromo ou não. Ele percorre a palavra inteira para encontrar o maior palíndromo contido nela, então de acordo com seu tamanho e o tamanho do maior palíndromo, podemos deduzir a quantidade de letras a serem inseridas para transformar a palavra inicial em um palíndromo.
 
 A cada iteração ele verifica se a atual substring é um palíndromo ou não, caso seja, ela verifica se ela é maior que o palíndromo encontrado anteriormente, se for então é armazenado a quantidade de caracteres desse novo palíndromo encontrado.
 
@@ -313,8 +314,8 @@ youthfulness
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.8\textwidth]{umapalavra.png}
-        \caption{Quantidade de caracteres a mais (em \%)}
+        \includegraphics[width=0.6\textwidth]{umapalavra.png}
+        \caption{Uma palavra - Quantidade de caracteres a mais (em \%)}
         \label{umapalavra}
     \end{figure}
 
@@ -338,8 +339,8 @@ yankeewizardwoefulabaseswrangle
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.8\textwidth]{cincopalavras2.png}
-        \caption{Quantidade de caracteres a mais (em \%)}
+        \includegraphics[width=0.6\textwidth]{cincopalavras2.png}
+        \caption{Cinco palavras - Quantidade de caracteres a mais (em \%)}
         \label{cincopalavras}
     \end{figure}
 
@@ -358,8 +359,8 @@ yorktownwrittenaberrationsaibohphobiaababawrappedwolffaberrantablewrote
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.8\textwidth]{dezpalavras3.png}
-        \caption{Quantidade de caracteres a mais (em \%)}
+        \includegraphics[width=0.6\textwidth]{dezpalavras3.png}
+        \caption{Dez palavras - Quantidade de caracteres a mais (em \%)}
         \label{dezpalavras}
     \end{figure}
 
@@ -371,8 +372,8 @@ Na Figura \ref{cinquentapalavras} aumentamos a quantidade de palavras concatenad
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.8\textwidth]{cinquentapalavras.png}
-        \caption{Quantidade de caracteres a mais (em \%)}
+        \includegraphics[width=0.6\textwidth]{cinquentapalavras.png}
+        \caption{Cinquenta palavras - Quantidade de caracteres a mais (em \%)}
         \label{cinquentapalavras}
     \end{figure}
 
@@ -383,8 +384,8 @@ Na Figura \ref{cempalavras}, no último teste, concatenamos cem palavras. Não i
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.8\textwidth]{cempalavras.png}
-        \caption{Quantidade de caracteres a mais (em \%)}
+        \includegraphics[width=0.6\textwidth]{cempalavras.png}
+        \caption{Cem palavras - Quantidade de caracteres a mais (em \%)}
         \label{cempalavras}
     \end{figure}
 
@@ -403,6 +404,8 @@ Na Figura \ref{cempalavras}, no último teste, concatenamos cem palavras. Não i
     Foi visto na Avaliação Experimental, que quanto maior a cadeia de caracteres, mais constante ficava a diferença entre as soluções ótima e não-ótima. Claro que a solução ótima ainda conseguia resolver o problema com uma média de $60\%$ a menos de caracteres inseridos, mas ainda assim era um resultado que não era esperado. Acreditava que a solução não-ótima do algoritmo guloso teria um rendimento muito pior.
 
     Caso fosse acatar o resultado do teste \ref{pequeno}, poderia dizer que o teto observável para a quantidade de caracteres a ser inseridos seria $800\%$, porém esse foi um único caso dentre centenas de outros testados. Observando os resultados dos testes maiores, poderia dizer que o teto observável ficaria em torno de $75\%$.
+
+    O problema de gerar palíndromos de forma eficiente foi solucionado com sucesso. Além disso, duas soluções, uma ótima e uma não-ótima, foram implementadas, obtendo um bom rendimento nos inúmeros testes realizados. Nos testes comparativos foi possível perceber a diferença gritante entre uma solução ótima e uma não-ótima.
 
 \bibliographystyle{sbc}
 \bibliography{tp2}
