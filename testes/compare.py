@@ -18,12 +18,10 @@ fin.close()
 
 count=0
 for i in range(len(n_pd)):
-	if n_pd[i]!=n_guloso[i]:
-		count+=1
-	print round(float(n_guloso[i])*100/float(n_pd[i]),2)
-	#print "----"
-
-print "As saidas tiveram %d diferentes." % count
+	if (int(n_pd[i]) == 0):
+		print (float(n_guloso[i])*100)
+	else:
+		print round(float(n_guloso[i])*100/float(n_pd[i]),2)-100
 		
 
 

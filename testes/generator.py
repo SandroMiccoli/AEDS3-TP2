@@ -11,7 +11,7 @@ import sys
 import random
 
 
-dicio = open('dictionary.txt','r')
+dicio = open('testes/dictionary.txt','r')
 n = int(sys.argv[1]) 
 k = int(sys.argv[2]) 
 words=dicio.readlines()
