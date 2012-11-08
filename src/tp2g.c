@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
             fscanf(inp,"%s\n",palavra);
             tamPalavra = strlen(palavra);
 
-            printf("%d\n",guloso(palavra, tamPalavra));
+            //printf("%d\n",guloso(palavra, tamPalavra));
 
             fprintf(out,"%d\n",guloso(palavra, tamPalavra));
 

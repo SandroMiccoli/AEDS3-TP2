@@ -44,7 +44,7 @@ int lcs(char * palavra, int len, Matriz * estados){
 
     lcs = len-estados->matriz[1][j];
 
-    printf("%d\n",lcs);
+    //printf("%d\n",lcs);
 
     return lcs;
 
